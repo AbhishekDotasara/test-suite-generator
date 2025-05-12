@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test Suite Generator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+        }
+
+        textarea,
+        pre {
+            width: 100%;
+            font-family: monospace;
+        }
+
+        textarea {
+            height: 200px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 Test Suite Generator</h1>
+    <form id="form">
+        <label for="problem">Problem Statement:</label><br>
+        <textarea id="problem"></textarea><br>
+        <button type="submit">Generate Test Suite</button>
+    </form>
+
+    <h2>Response:</h2>
+    <div id="output"></div>
+
+    <script>
+        document.getElementById('form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const problem = document.getElementById('problem').value;
+            const res = await fetch('/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ problem_statement: problem })
+            });
+            const html = await res.text();
+            document.getElementById('output').innerHTML = html;
+        });
+    </script>
+</body>
+
+</html>
